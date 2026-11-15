@@ -1,0 +1,29 @@
+# Filing through the API or `gh issue create`? Forms only apply on the web:
+# write the body with each field's label below as a `### ` heading, in order.
+name: Module or feature
+description: A Polybar module or state the example should color, or a new Polybar release to support.
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        `mistpine.ini` sets colors only; the example bar shows one way to use them. Fonts and modules stay in your own config.
+  - type: input
+    id: what
+    attributes:
+      label: Modules or states
+      placeholder: "internal/battery, label-urgent, …"
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Polybar version that added them
+      description: A link to the release notes or the module's wiki page helps.
+  - type: textarea
+    id: why
+    attributes:
+      label: Why
+      description: What looks off without them, and which spec colors you think they should use.
+    validations:
+      required: true
