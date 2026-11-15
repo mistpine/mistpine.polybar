@@ -88,6 +88,10 @@ plain `purple` sits at 4.49:1 on the bar, just under the spec's 4.5:1.
 
 Requires Node 24+, pnpm (`corepack enable`) and Docker.
 
+The spec loader, color math, banner and pixel checks come from
+[@mistpine/port-kit](https://github.com/mistpine/port-kit), shared by every
+mistpine port.
+
 ```sh
 pnpm install
 pnpm generate  # themes/ and examples/ from the mistpine spec and src/
@@ -123,5 +127,4 @@ checks every role's pixels, and crops the 26.04 shot for the README.
 
 ## License
 
-[MIT](LICENSE). Outfit and JetBrains Mono (in `scripts/fonts`, for the banner)
-are under the SIL Open Font License 1.1.
+[MIT](LICENSE).
