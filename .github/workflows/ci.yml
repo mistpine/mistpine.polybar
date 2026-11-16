@@ -14,17 +14,8 @@ concurrency:
 
 jobs:
   check:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v7
-      - uses: actions/setup-node@v7
-        with:
-          node-version: 24
-      - run: corepack enable
-      - run: pnpm install --frozen-lockfile
-      - run: pnpm lint
-      - run: pnpm typecheck
-      # themes/ and examples/ must match the generator, src/ and the current mistpine spec.
-      - run: pnpm check
-      # Polybar 3.7.1 and 3.7.2 (in Docker) must load the example and show the spec colors.
-      - run: pnpm verify
+    # themes/ and examples/ must match the generator, src/ and the current mistpine spec.
+    # Polybar 3.7.1 and 3.7.2 (in Docker) must load the example and show the spec colors.
+    uses: mistpine/port-kit/.github/workflows/port.yml@v0.1.0
+    with:
+      verify: true

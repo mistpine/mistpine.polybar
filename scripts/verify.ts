@@ -16,9 +16,11 @@ import { execFileSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
-import { loadSpec, ROOT } from "./lib/colors.ts";
-import { image } from "./lib/docker.ts";
-import { type Expect, expectPixels, load } from "./lib/pixels.ts";
+import { loadSpec } from "@mistpine/port-kit";
+import { image } from "@mistpine/port-kit/docker";
+import { type Expect, expectPixels, load } from "@mistpine/port-kit/pixels";
+
+const ROOT = join(import.meta.dirname, "..");
 
 const RELEASES = { "24.04": "3.7.1", "26.04": "3.7.2" } as const;
 type Release = keyof typeof RELEASES;
@@ -32,7 +34,7 @@ function fail(message: string): never {
   process.exit(1);
 }
 
-const { spec } = await loadSpec();
+const { spec } = await loadSpec(ROOT);
 const ui = (n: string) => (spec.ui[n]?.hex ?? fail(`the spec has no ui.${n}`)).toLowerCase();
 const pal = (n: string) => (spec.palette[n] ?? fail(`the spec has no ${n}`)).toLowerCase();
 const keyOf = (name: string) => name.replace(/[A-Z]/g, (c) => `-${c.toLowerCase()}`);
@@ -114,7 +116,11 @@ const NOISE = [
 ];
 
 for (const release of releases) {
-  const tag = image(release);
+  const tag = image({
+    name: "mistpine-polybar",
+    release,
+    context: join(ROOT, "scripts", "render"),
+  });
   const out = mkdtempSync(join(tmpdir(), "mistpine-polybar-verify-"));
   try {
     execFileSync(
